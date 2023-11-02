@@ -256,10 +256,7 @@ POST DBS_URI/register
 ## Run
 
 ```bash
-export ACCEPTED_PAYMENTS=ethereum,matic
 export NODE_RPC_URIS=default,default
-export BUNDLR_URI="https://node1.bundlr.network"
-#export BUNDLR_URI="https://devnet.bundlr.network" # Use Budnlr devnet when interacting with testnets
 export PORT=8081
 export PRIVATE_KEY="0000000000000000000000000000000000000000000000000000000000000000"
 export SQLITE_DB_PATH=/path/to/db/file
@@ -269,10 +266,6 @@ export SELF_URI="https://localhost"
 export IPFS_GATEWAY="https://cloudflare-ipfs.com/ipfs/" # should have trailing slash
 export IPFS_GATEWAY="https://IPFS.net/" # should have trailing slash
 export MAX_UPLOAD_SIZE=1099511627776 # in bytes, 0 means unlimited
-export BUNDLR_BATCH_SIZE=1 # default: 1 (chunk at a time)
-export BUNDLR_CHUNK_SIZE=524288 # default: 524288 (512 kB)
-export BUNDLR_PRICE_BUFFER=10 # percent, default: 10
-export GAS_PRICE_BUFFER=10 # percent, default: 10
 
 npm start
 ```
@@ -283,12 +276,6 @@ Testing requires two accounts:
 
 PRIVATE_KEY is the server account
 TEST_PRIVATE_KEY is the client account
-
-The server needs an operational reserve of native gas fee tokens, enough to cover
-one full upload procedure (transferFrom, unwrap (withdraw), send, wrap (deposit), transfer).
-
-The client needs sufficient wrapped token to cover upload fee + reimburse the
-server's gas fees.
 
 ### Manual tests
 
