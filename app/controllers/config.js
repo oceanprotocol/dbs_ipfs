@@ -77,22 +77,6 @@ const checkConfig = () => {
     return false;
   }
 
-  const arweaveUri = process.env.ARWEAVE_GATEWAY;
-  if (arweaveUri == null) {
-    console.log("ARWEAVE_GATEWAY environment variable not set");
-    return false;
-  }
-  try {
-    const arweaveUrl = new URL(arweaveUri);
-    if (arweaveUrl.protocol != "http:" && arweaveUrl.protocol != "https:") {
-      console.log("ARWEAVE_GATEWAY should be http or https");
-      return false;
-    }
-  } catch (err) {
-    console.log("ARWEAVE_GATEWAY is invalid");
-    return false;
-  }
-
   const maxUploadSize = process.env.MAX_UPLOAD_SIZE;
   if (maxUploadSize == null) {
     console.log("MAX_UPLOAD_SIZE environment variable not set");
