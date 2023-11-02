@@ -153,7 +153,7 @@ exports.upload = async (req, res) => {
 
   const requests = files.map((fileObj, index) => {
     const cid = fileObj.ipfs_uri.substring(7);
-    return fetch(`${process.env.UPLOADER_IPFS_URI}/api/v0/pin/add?arg=${cid}`, {
+    return fetch(`${process.env.IPFS_GATEWAY}/api/v0/pin/add?arg=${cid}`, {
       method: "POST",
     })
       .then((response) => response.json())

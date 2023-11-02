@@ -1,44 +1,6 @@
 const { URL } = require("url");
 
 const checkConfig = () => {
-  const acceptedPayments = process.env.ACCEPTED_PAYMENTS;
-  if (acceptedPayments == null) {
-    console.log("ACCEPTED_PAYMENTS environment variable not set");
-    return false;
-  }
-  const payments = acceptedPayments.split(",");
-
-  const nodeRpcUris = process.env.NODE_RPC_URIS;
-  if (nodeRpcUris == null) {
-    console.log("NODE_RPC_URIS environment variable not set");
-    return false;
-  }
-  const uris = nodeRpcUris.split(",");
-  if (uris.length != payments.length) {
-    console.log(
-      "ACCEPTED_PAYMENTS and NODE_RPC_URIS environment variables do not have the same number of entries"
-    );
-    console.log(uris);
-    console.log(payments);
-    return false;
-  }
-  for (let i = 0; i < uris.length; i++) {
-    let url;
-    if (uris[i] != "default") {
-      try {
-        url = new URL(uris[i]);
-        if (url.protocol != "http:" && url.protocol != "https:") {
-          // do we allow wss://?
-          console.log("each NODE_RPC_URIS should be http or https");
-          return false;
-        }
-      } catch (err) {
-        console.log("One of the NODE_RPC_URIS is invalid");
-        return false;
-      }
-    }
-  }
-
   const privateKey = process.env.PRIVATE_KEY;
   if (privateKey == null) {
     console.log("PRIVATE_KEY environment variable not set");
