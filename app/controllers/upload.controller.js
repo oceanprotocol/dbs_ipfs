@@ -153,6 +153,8 @@ exports.upload = async (req, res) => {
   Quote.setStatus(quoteId, Quote.QUOTE_STATUS_UPLOAD_START);
 
   const requests = files.map((fileObj, index) => {
+    console.log("fileObj.ipfs_uri", fileObj.ipfs_uri);
+
     const cid = fileObj.ipfs_uri.substring(7);
     const url = `${process.env.IPFS_GATEWAY}/api/v0/pin/add?arg=${cid}`;
 
@@ -163,6 +165,17 @@ exports.upload = async (req, res) => {
       .post(url)
       .then((response) => {
         console.log(response.data);
+        console.log("upload done");
+        try {
+          console.log("Updating cid in database");
+          File.setCid(quoteId, index, cid);
+        } catch (err) {
+          console.error(
+            `Error occurred while writing file cid to database: ${err?.name}: ${err?.message}. CID = ${cid}, file index = ${index}`
+          );
+          reject(Quote.QUOTE_STATUS_UPLOAD_INTERNAL_ERROR);
+          return;
+        }
       })
       .catch((error) => {
         console.error("Error pinning file:", error.message);

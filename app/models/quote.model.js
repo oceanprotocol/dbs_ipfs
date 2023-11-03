@@ -95,7 +95,7 @@ Quote.setStatus = (quoteId, status) => {
 };
 
 Quote.getLink = (quoteId) => {
-  const query = `SELECT 'ipfs' AS 'type', transactionHash
+  const query = `SELECT 'ipfs' AS 'type', cid
 		FROM files
 		WHERE quoteId = ?
 		ORDER BY "index" ASC;`;
@@ -122,7 +122,7 @@ Quote.getHistory = (userAddress, offset, limit) => {
   console.log("Max pages:", maxPages);
 
   const query = `
-    SELECT 'ipfs' AS 'type', quote.quoteId, quote.userAddress, quote.status, quote.chainId, quote.tokenAddress, quote.tokenAmount, quote.approveAddress, files.transactionHash
+    SELECT 'ipfs' AS 'type', quote.quoteId, quote.userAddress, quote.status, quote.chainId, quote.tokenAddress, quote.tokenAmount, quote.approveAddress, files.cid
     FROM quote
     INNER JOIN files ON quote.quoteId = files.quoteId
     WHERE quote.userAddress = ?

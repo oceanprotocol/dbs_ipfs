@@ -1,7 +1,7 @@
 const db_file = process.env.SQLITE_DB_PATH;
 
-const sqlite = require('better-sqlite3');
-const path = require('path');
+const sqlite = require("better-sqlite3");
+const path = require("path");
 
 const create_quote = `
 	CREATE TABLE IF NOT EXISTS "quote" (
@@ -22,7 +22,7 @@ const create_files = `
 		"quoteId"	TEXT NOT NULL,
 		"index"	INTEGER NOT NULL,
 		"length"	INTEGER NOT NULL,
-		"transactionHash"	TEXT,
+		"cid"	TEXT,
 		FOREIGN KEY("quoteId") REFERENCES "quote"("quoteId") ON DELETE CASCADE,
 		PRIMARY KEY("quoteId","index")
 	);
@@ -38,25 +38,23 @@ const create_nonce = `
 
 let db;
 try {
-	db = new sqlite(path.resolve(db_file));
-}
-catch(err) {
-	console.log(err);
+  db = new sqlite(path.resolve(db_file));
+} catch (err) {
+  console.log(err);
 }
 
-const check_sql = "SELECT name FROM sqlite_master WHERE type='table' AND name='quote';";
+const check_sql =
+  "SELECT name FROM sqlite_master WHERE type='table' AND name='quote';";
 const stmt = db.prepare(check_sql);
 const tables = stmt.get();
-if(!tables) {
-	try {
-		db.prepare(create_quote).run();
-		db.prepare(create_files).run();
-		db.prepare(create_nonce).run();
-	}
-	catch(err) {
-		console.log(err);
-	}
+if (!tables) {
+  try {
+    db.prepare(create_quote).run();
+    db.prepare(create_files).run();
+    db.prepare(create_nonce).run();
+  } catch (err) {
+    console.log(err);
+  }
 }
 
 module.exports = db;
-
