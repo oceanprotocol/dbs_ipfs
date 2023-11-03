@@ -177,7 +177,7 @@ Returns:
 [
   {
     "type": "ipfs",
-    "transactionHash": "xxxx"
+    "cid": "xxxx"
   }
 ]
 ```
@@ -217,7 +217,7 @@ Returns:
     "tokenAddress": "0x222",
     "tokenAmount": "999999999",
     "approveAddress": "0x1234",
-    "transactionHash": "xxxx"
+    "cid": "xxxx"
   }
 ]
 ```

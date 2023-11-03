@@ -1,4 +1,5 @@
 const Quote = require("../models/quote.model.js");
+const File = require("../models/upload.model.js");
 const Nonce = require("../models/nonce.model.js");
 const axios = require("axios");
 const ethers = require("ethers");
@@ -173,7 +174,7 @@ exports.upload = async (req, res) => {
           console.error(
             `Error occurred while writing file cid to database: ${err?.name}: ${err?.message}. CID = ${cid}, file index = ${index}`
           );
-          reject(Quote.QUOTE_STATUS_UPLOAD_INTERNAL_ERROR);
+          Quote.QUOTE_STATUS_UPLOAD_INTERNAL_ERROR;
           return;
         }
       })
