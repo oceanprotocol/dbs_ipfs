@@ -1,5 +1,6 @@
 const Quote = require("../models/quote.model.js");
 const Nonce = require("../models/nonce.model.js");
+const axios = require("axios");
 const ethers = require("ethers");
 const { errorResponse } = require("./error.js");
 
@@ -153,15 +154,18 @@ exports.upload = async (req, res) => {
 
   const requests = files.map((fileObj, index) => {
     const cid = fileObj.ipfs_uri.substring(7);
-    return fetch(`${process.env.IPFS_GATEWAY}/api/v0/pin/add?arg=${cid}`, {
-      method: "POST",
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log(data);
+    const url = `${process.env.IPFS_GATEWAY}/api/v0/pin/add?arg=${cid}`;
+
+    console.log("uploading cid:", cid);
+    console.log("uploading file to IPFS endpoint:", url);
+
+    return axios
+      .post(url)
+      .then((response) => {
+        console.log(response.data);
       })
       .catch((error) => {
-        console.error("Error pinning file:", error);
+        console.error("Error pinning file:", error.message);
         Quote.setStatus(quoteId, Quote.QUOTE_STATUS_UPLOAD_UPLOAD_FAILED);
         throw error;
       });
