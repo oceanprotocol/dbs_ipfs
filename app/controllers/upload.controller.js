@@ -166,7 +166,7 @@ exports.upload = async (req, res) => {
       .post(url)
       .then((response) => {
         console.log(response.data);
-        console.log("upload done");
+        console.log("Pinning completed.");
         try {
           console.log("Updating cid in database");
           File.setCid(quoteId, index, cid);
