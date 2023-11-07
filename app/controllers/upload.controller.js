@@ -157,7 +157,7 @@ exports.upload = async (req, res) => {
     console.log("fileObj.ipfs_uri", fileObj.ipfs_uri);
 
     const cid = fileObj.ipfs_uri.substring(7);
-    const url = `${process.env.IPFS_GATEWAY}/api/v0/pin/add?arg=${cid}`;
+    const url = `${process.env.IPFS_GATEWAY}/pins/${cid}`;
 
     console.log("uploading cid:", cid);
     console.log("uploading file to IPFS endpoint:", url);
